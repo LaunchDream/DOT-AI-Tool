@@ -901,8 +901,8 @@ body {
       <div class="hero-stat"><span class="num">31+</span><span class="lbl">AI Use Cases</span></div>
       <div class="hero-stat"><span class="num">6</span><span class="lbl">Output Reports</span></div>
     </div>
-    <button class="btn-primary" onclick="showSetup()">Start My Assessment →</button>
-    <button class="btn-secondary" onclick="showSetup()">See Sample Report</button>
+    <button class="btn-primary" data-action="showSetup">Start My Assessment →</button>
+    <button class="btn-secondary" data-action="showSetup">See Sample Report</button>
   </section>
 
   <section class="how-section">
@@ -965,22 +965,22 @@ body {
       <div class="form-group">
         <label class="form-label">Select Your Office</label>
         <div class="office-grid" id="office-grid">
-          <button class="office-btn" onclick="selectOffice('Traffic Operations', this)"><div class="ob-icon">🚦</div><div class="ob-name">Traffic Operations</div></button>
-          <button class="office-btn" onclick="selectOffice('Maintenance', this)"><div class="ob-icon">🔧</div><div class="ob-name">Maintenance</div></button>
-          <button class="office-btn" onclick="selectOffice('Safety', this)"><div class="ob-icon">🦺</div><div class="ob-name">Safety</div></button>
-          <button class="office-btn" onclick="selectOffice('Planning & Policy', this)"><div class="ob-icon">📐</div><div class="ob-name">Planning & Policy</div></button>
-          <button class="office-btn" onclick="selectOffice('Construction', this)"><div class="ob-icon">🏗️</div><div class="ob-name">Construction / Project Delivery</div></button>
-          <button class="office-btn" onclick="selectOffice('Asset Management', this)"><div class="ob-icon">🗂️</div><div class="ob-name">Asset Management</div></button>
-          <button class="office-btn" onclick="selectOffice('Finance & Administration', this)"><div class="ob-icon">💰</div><div class="ob-name">Finance & Administration</div></button>
-          <button class="office-btn" onclick="selectOffice('IT / ITS', this)"><div class="ob-icon">💻</div><div class="ob-name">IT / ITS</div></button>
-          <button class="office-btn" onclick="selectOffice('Transit', this)"><div class="ob-icon">🚌</div><div class="ob-name">Transit</div></button>
-          <button class="office-btn" onclick="selectOffice('Environmental & ROW', this)"><div class="ob-icon">🌿</div><div class="ob-name">Environmental & ROW</div></button>
-          <button class="office-btn" onclick="selectOffice('Communications', this)"><div class="ob-icon">📢</div><div class="ob-name">Communications</div></button>
-          <button class="office-btn" onclick="selectOffice('Emergency Management', this)"><div class="ob-icon">🚨</div><div class="ob-name">Emergency Management</div></button>
+          <button class="office-btn" data-office="Traffic Operations"><div class="ob-icon">🚦</div><div class="ob-name">Traffic Operations</div></button>
+          <button class="office-btn" data-office="Maintenance"><div class="ob-icon">🔧</div><div class="ob-name">Maintenance</div></button>
+          <button class="office-btn" data-office="Safety"><div class="ob-icon">🦺</div><div class="ob-name">Safety</div></button>
+          <button class="office-btn" data-office="Planning & Policy"><div class="ob-icon">📐</div><div class="ob-name">Planning & Policy</div></button>
+          <button class="office-btn" data-office="Construction"><div class="ob-icon">🏗️</div><div class="ob-name">Construction / Project Delivery</div></button>
+          <button class="office-btn" data-office="Asset Management"><div class="ob-icon">🗂️</div><div class="ob-name">Asset Management</div></button>
+          <button class="office-btn" data-office="Finance & Administration"><div class="ob-icon">💰</div><div class="ob-name">Finance & Administration</div></button>
+          <button class="office-btn" data-office="IT / ITS"><div class="ob-icon">💻</div><div class="ob-name">IT / ITS</div></button>
+          <button class="office-btn" data-office="Transit"><div class="ob-icon">🚌</div><div class="ob-name">Transit</div></button>
+          <button class="office-btn" data-office="Environmental & ROW"><div class="ob-icon">🌿</div><div class="ob-name">Environmental & ROW</div></button>
+          <button class="office-btn" data-office="Communications"><div class="ob-icon">📢</div><div class="ob-name">Communications</div></button>
+          <button class="office-btn" data-office="Emergency Management"><div class="ob-icon">🚨</div><div class="ob-name">Emergency Management</div></button>
         </div>
       </div>
 
-      <button class="btn-next" style="width:100%; margin-top:8px" onclick="startSurvey()">Begin Assessment →</button>
+      <button class="btn-next" style="width:100%; margin-top:8px" data-action="startSurvey">Begin Assessment →</button>
     </div>
   </div>
 </div>
@@ -1101,8 +1101,8 @@ body {
         <p>Zoneium's team can run a full DOT-wide workshop and build your AI implementation plan.</p>
       </div>
       <div class="action-btns">
-        <button class="btn-outline-white" onclick="window.print()">⬇ Download Report</button>
-        <button class="btn-outline-white" onclick="showSetup()">↺ Retake Assessment</button>
+        <button class="btn-outline-white" data-action="printReport">⬇ Download Report</button>
+        <button class="btn-outline-white" data-action="showSetup">↺ Retake Assessment</button>
         <button class="btn-accent-solid">Talk to Zoneium →</button>
       </div>
     </div>
@@ -1236,7 +1236,7 @@ function renderSection() {
       html += `<div class="scale-wrap">`;
       for (let i=1;i<=5;i++) {
         const sel = state.answers[q.id] === i ? `s${i} selected` : `s${i}`;
-        html += `<button class="scale-btn ${sel}" onclick="setScale('${q.id}',${i},this)">
+        html += `<button class="scale-btn ${sel}" data-scale-id="${q.id}" data-scale-val="${i}">
           ${i}<span>${q.labels[i-1]}</span></button>`;
       }
       html += `</div>`;
@@ -1244,7 +1244,7 @@ function renderSection() {
       html += `<div class="options-grid">`;
       q.opts.forEach((opt, oi) => {
         const sel = state.answers[q.id] === oi+1 ? 'selected' : '';
-        html += `<button class="opt-btn ${sel}" onclick="setOption('${q.id}',${oi+1},this)">
+        html += `<button class="opt-btn ${sel}" data-opt-id="${q.id}" data-opt-val="${oi+1}">
           <div class="opt-check">${sel ? '✓' : ''}</div>${opt}</button>`;
       });
       html += `</div>`;
@@ -1253,7 +1253,7 @@ function renderSection() {
       html += `<div class="multi-grid">`;
       q.opts.forEach((opt, oi) => {
         const sel = multiSelections[q.id].has(oi+1) ? 'selected' : '';
-        html += `<button class="multi-btn ${sel}" onclick="toggleMulti('${q.id}',${oi+1},this)">${opt}</button>`;
+        html += `<button class="multi-btn ${sel}" data-multi-id="${q.id}" data-multi-val="${oi+1}">${opt}</button>`;
       });
       html += `</div><div style="font-size:12px;color:var(--muted);margin-top:10px">Select up to 3 options</div>`;
     }
@@ -1262,8 +1262,8 @@ function renderSection() {
 
   html += `</div>
     <div class="nav-row">
-      <button class="btn-back" onclick="prevSection()" ${currentSection===0?'style="visibility:hidden"':''}>← Back</button>
-      <button class="btn-next" onclick="nextSection()">${currentSection < SECTIONS.length-1 ? 'Next Section →' : 'See My Results →'}</button>
+      <button class="btn-back" data-action="prevSection" ${currentSection===0?'style="visibility:hidden"':''}>← Back</button>
+      <button class="btn-next" data-action="nextSection">${currentSection < SECTIONS.length-1 ? 'Next Section →' : 'See My Results →'}</button>
     </div>`;
 
   document.getElementById('survey-content').innerHTML = html;
@@ -1716,6 +1716,41 @@ function buildRoadmap(useCases) {
 function capitalize(s) {
   return (s||'').replace(/\b\w/g, l => l.toUpperCase());
 }
+
+// ─── EVENT DELEGATION ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.addEventListener('click', function(e) {
+    const btn = e.target.closest('button, [data-action], [data-office], [data-scale-id], [data-opt-id], [data-multi-id]');
+    if (!btn) return;
+
+    // Simple actions
+    const action = btn.getAttribute('data-action');
+    if (action === 'showSetup') { showSetup(); return; }
+    if (action === 'startSurvey') { startSurvey(); return; }
+    if (action === 'nextSection') { nextSection(); return; }
+    if (action === 'prevSection') { prevSection(); return; }
+    if (action === 'printReport') { window.print(); return; }
+
+    // Office selection
+    const office = btn.getAttribute('data-office');
+    if (office) { selectOffice(office, btn); return; }
+
+    // Scale buttons
+    const scaleId = btn.getAttribute('data-scale-id');
+    const scaleVal = btn.getAttribute('data-scale-val');
+    if (scaleId && scaleVal) { setScale(scaleId, parseInt(scaleVal), btn); return; }
+
+    // Option buttons
+    const optId = btn.getAttribute('data-opt-id');
+    const optVal = btn.getAttribute('data-opt-val');
+    if (optId && optVal) { setOption(optId, parseInt(optVal), btn); return; }
+
+    // Multi buttons
+    const multiId = btn.getAttribute('data-multi-id');
+    const multiVal = btn.getAttribute('data-multi-val');
+    if (multiId && multiVal) { toggleMulti(multiId, parseInt(multiVal), btn); return; }
+  });
+});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </body>
